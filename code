@@ -1,0 +1,81 @@
+def gradetopoint(grade):
+    grade = grade.upper()
+    if grade == 'O':
+        return 10
+    elif grade == 'A+':
+        return 9
+    elif grade == 'A':
+        return 8
+    elif grade == 'B+':
+        return 7
+    elif grade == 'B':
+        return 6
+    elif grade == 'C':
+        return 5
+    else:
+        return 0
+
+
+def getgrade():
+    while True:
+        grade = input("Enter Grade (O, A+, A, B+, B, C): ")
+        if grade.upper() in ['O', 'A+', 'A', 'B+', 'B', 'C']:
+            return grade
+        else:
+            print("Invalid grade! Please enter again.")
+
+
+def getcredit():
+
+    while True:
+        try:
+            credit = float(input("Enter subject credit: "))
+            if credit > 0:
+                return credit
+            else:
+                print("Credit must be positive.")
+        except ValueError:
+            print("Invalid input! Enter numeric value.")
+
+
+def calculatecgpa(totalpoints, totalcredits):
+    return totalpoints / totalcredits
+
+
+def calculatepercentage(cgpa):
+    return (cgpa - 0.75) * 10
+
+
+
+numsubjects = int(input("Enter number of subjects: "))
+
+totalcreditpoints = 0
+totalcredits = 0
+
+for i in range(1, numsubjects + 1):
+    print(f"\n----- Subject {i} -----")
+
+    subjectname = input("Enter subject name: ")
+    credit = getcredit()
+    grade = getgrade()
+
+    gradepoint = gradetopoint(grade)
+    creditpoints = credit * gradepoint
+
+    totalcreditpoints += creditpoints
+    totalcredits += credit
+
+    print(f"Grade Point for {subjectname}: {gradepoint}")
+    print(f"Credit Points: {creditpoints}")
+
+
+cgpa = calculatecgpa(totalcreditpoints, totalcredits)
+percentage = calculatepercentage(cgpa)
+
+print("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+print("               RESULT                 ")
+print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+print("Total Credits Earned :", totalcredits)
+print("Total Credit Points  :", totalcreditpoints)
+print("Final CGPA           :", round(cgpa, 2))
+print("Equivalent Percentage:", round(percentage, 2), "%")
